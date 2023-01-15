@@ -22,3 +22,24 @@ function super_css_js_file_calling()
     wp_enqueue_script('main', get_template_directory_uri().'/js/main.js', array(), '1.0.0', 'true');
 }
 add_action('wp_enqueue_scripts', 'super_css_js_file_calling');
+
+
+// Theme Function
+function super_customizer_register($wp_customize)
+{
+    $wp_customize->add_section('super_header_area', array(
+        'title' => __('Header Area', 'atikworkspace'),
+        'description' => 'If you interested to update your header area, you can do it here.',
+    ));
+
+    $wp_customize->add_setting('super_logo', array(
+        'default' => get_bloginfo('template_directory') . '/img/logo.png',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'super_logo', array(
+        'label' => 'Logo Upload',
+        'setting' => 'super-logo',
+        'section' => 'super_header_area',
+    ) ));
+}
+add_action('customize_register', 'super_customizer_register');
